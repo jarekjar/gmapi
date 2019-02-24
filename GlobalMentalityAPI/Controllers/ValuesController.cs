@@ -14,7 +14,7 @@ namespace GlobalMentalityAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "YO wuddup LT" };
         }
 
         // GET api/values/5
