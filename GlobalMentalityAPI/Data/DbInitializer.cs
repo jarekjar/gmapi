@@ -18,64 +18,86 @@ namespace GlobalMentalityAPI.Data
                 return;   // DB has been seeded
             }
 
-            var Patients = new Patient[]
+            var users = new User[]
             {
-                new Patient{FirstName="Carson",LastName="Alexander"},
-                new Patient{FirstName="Meredith",LastName="Alonso"},
-                new Patient{FirstName="Arturo",LastName="Anand"},
-                new Patient{FirstName="Gytis",LastName="Barzdukas"},
-                new Patient{FirstName="Yan",LastName="Li"},
-                new Patient{FirstName="Peggy",LastName="Justice"},
-                new Patient{FirstName="Laura",LastName="Norman"},
-                new Patient{FirstName="Nino",LastName="Olivetto"}
+                new User{Username = "one"},
+                new User{Username = "two"},
+                new User{Username = "three"},
+                new User{Username = "four"},
+                new User{Username = "five"},
+                new User{Username = "six"},
+                new User{Username = "seven"},
+                new User{Username = "eight"},
+                new User{Username = "nine"},
+                new User{Username = "ten"},
+                new User{Username = "eleven"}
             };
 
-            foreach (Patient s in Patients)
+            foreach (User u in users)
             {
-                context.Patients.Add(s);
+                context.Users.Add(u);
             }
 
             context.SaveChanges();
 
-            var courses = new Course[]
+            var businesses = new Business[]
             {
-                new Course{CourseID=1050,Title="Chemistry",Credits=3},
-                new Course{CourseID=4022,Title="Microeconomics",Credits=3},
-                new Course{CourseID=4041,Title="Macroeconomics",Credits=3},
-                new Course{CourseID=1045,Title="Calculus",Credits=4},
-                new Course{CourseID=3141,Title="Trigonometry",Credits=4},
-                new Course{CourseID=2021,Title="Composition",Credits=3},
-                new Course{CourseID=2042,Title="Literature",Credits=4}
+                new Business{ Name="The Great Business" }
             };
-            foreach (Course c in courses)
+
+            foreach (Business b in businesses)
             {
-                context.Courses.Add(c);
+                context.Businesses.Add(b);
             }
+
             context.SaveChanges();
 
-            var enrollments = new Enrollment[]
+            var doctors = new Doctor[]
             {
-                new Enrollment{PatientID=1,CourseID=1050,Grade=Grade.A},
-                new Enrollment{PatientID=1,CourseID=4022,Grade=Grade.C},
-                new Enrollment{PatientID=1,CourseID=4041,Grade=Grade.B},
-                new Enrollment{PatientID=2,CourseID=1045,Grade=Grade.B},
-                new Enrollment{PatientID=2,CourseID=3141,Grade=Grade.F},
-                new Enrollment{PatientID=2,CourseID=2021,Grade=Grade.F},
-                new Enrollment{PatientID=3,CourseID=1050},
-                new Enrollment{PatientID=4,CourseID=1050},
-                new Enrollment{PatientID=4,CourseID=4022,Grade=Grade.F},
-                new Enrollment{PatientID=5,CourseID=4041,Grade=Grade.C},
-                new Enrollment{PatientID=6,CourseID=1045},
-                new Enrollment{PatientID=7,CourseID=3141,Grade=Grade.A},
+                new Doctor{LastName="Carson",FirstName="Alexander", UserID = users.Single(u => u.Username == "one").ID, BusinessID = 1} ,
+                new Doctor{LastName="Meredith",FirstName="Alonso", UserID = users.Single(u => u.Username == "two").ID, BusinessID = 1 }
             };
 
-            foreach (Enrollment e in enrollments)
+            foreach (Doctor d in doctors)
             {
-                context.Enrollments.Add(e);
+                context.Doctors.Add(d);
+            }
+
+            context.SaveChanges();
+
+            var patients = new Patient[]
+            {
+                new Patient{FirstName="Carson",LastName="Alexander", UserID = users.Single(u => u.Username == "three").ID, DoctorID = 1, BusinessID = 1},
+                new Patient{FirstName="Arturo",LastName="Anand", UserID = users.Single(u => u.Username == "four").ID, DoctorID = 1, BusinessID = 1},
+                new Patient{FirstName="Meredith",LastName="Alonso", UserID = users.Single(u => u.Username == "five").ID, DoctorID = 1, BusinessID = 1},
+                new Patient{FirstName="Gytis",LastName="Barzdukas", UserID = users.Single(u => u.Username == "six").ID, DoctorID = 1, BusinessID = 1},
+                new Patient{FirstName="Yan",LastName="Li", UserID = users.Single(u => u.Username == "seven").ID, DoctorID = 1, BusinessID = 1},
+                new Patient{FirstName="Peggy",LastName="Justice", UserID = users.Single(u => u.Username == "eight").ID, DoctorID = 2, BusinessID = 1},
+                new Patient{FirstName="Laura",LastName="Norman", UserID = users.Single(u => u.Username == "nine").ID, DoctorID = 2, BusinessID = 1},
+                new Patient{FirstName="Nino",LastName="Olivetto" , UserID = users.Single(u => u.Username == "ten").ID, DoctorID = 2, BusinessID = 1}
+            };
+
+            foreach (Patient p in patients)
+            {
+                context.Patients.Add(p);
+            }
+
+            context.SaveChanges();
+
+            
+
+            var admins = new OfficeAdmin[]
+            {
+                new OfficeAdmin{LastName="Jared",FirstName="Alexander", UserID = users.Single(u => u.Username == "eleven").ID, BusinessID = 1 }
+            };
+
+            foreach (OfficeAdmin a in admins)
+            {
+                context.OfficeAdmins.Add(a);
             }
 
             context.SaveChanges();
         }
-        
+
     }
 }

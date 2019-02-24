@@ -19,6 +19,28 @@ namespace GlobalMentalityAPI.Data
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<OfficeAdmin> OfficeAdmins { get; set; }
         public DbSet<Patient> Patients { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Business>()
+                .HasMany(p => p.Patients)
+                .WithOne();
+
+            modelBuilder.Entity<Business>()
+                .HasMany(p => p.Doctors)
+                .WithOne();
+
+            modelBuilder.Entity<Business>()
+                .HasMany(p => p.OfficeAdmins)
+                .WithOne();
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
         
 }
