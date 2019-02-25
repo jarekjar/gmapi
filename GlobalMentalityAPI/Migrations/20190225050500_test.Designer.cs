@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobalMentalityAPI.Migrations
 {
     [DbContext(typeof(BusinessContext))]
-    [Migration("20190224054241_Test")]
-    partial class Test
+    [Migration("20190225050500_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
