@@ -7,22 +7,19 @@ using System.Threading.Tasks;
 
 namespace GlobalMentalityAPI.Models
 {
-    public class Doctor
+    public class Provider
     {
-        [Key]
-        public int DoctorID { get; set; }
-        [ForeignKey("User")]
+        public int ID { get; set; }
         public int UserID { get; set; }
-        [ForeignKey("Business")]
-        public int BusinessID { get; set; }
         public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string Practice { get; set; }
         [Phone]
         public string PhoneNum { get; set; }
+        public string FaxNum { get; set; }
         [EmailAddress]
         public string EmailAddress { get; set; }
-        public char MiddleInitial { get; set; }
-        public string LastName { get; set; }
         public string Title { get; set; }
-        public List<Patient> Patients { get; set; }
     }
 }

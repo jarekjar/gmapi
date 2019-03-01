@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GlobalMentalityAPI.Interfaces;
+using GlobalMentalityAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GlobalMentalityAPI.Data;
-using GlobalMentalityAPI.Models;
 
 namespace GlobalMentalityAPI.Controllers
 {
@@ -14,113 +13,50 @@ namespace GlobalMentalityAPI.Controllers
     [ApiController]
     public class PatientsController : ControllerBase
     {
-        private readonly BusinessContext _context;
+        private readonly IPatientRepository _patientRepo;
+        private readonly IEmergencyRepository _emergencyRepo;
+        private readonly IProviderRepository _providerRepo;
 
-        public PatientsController(BusinessContext context)
+        public PatientsController(IPatientRepository patientRepo, IEmergencyRepository emergencyRepo, IProviderRepository providerRepo)
         {
-            _context = context;
+            _patientRepo = patientRepo;
+            _emergencyRepo = emergencyRepo;
+            _providerRepo = providerRepo;
         }
 
         // GET: api/Patients
         [HttpGet]
-        public IEnumerable<Patient> GetPatients()
+        public IEnumerable<string> GetAll()
         {
-            return _context.Patients;
+            return new string[] { "value1", "value2" };
         }
 
         // GET: api/Patients/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPatient([FromRoute] int id)
+        public async Task<ActionResult<Patient>> GetByID(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var patient = await _context.Patients.FindAsync(id);
-
-            if (patient == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(patient);
-        }
-
-        // PUT: api/Patients/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPatient([FromRoute] int id, [FromBody] Patient patient)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != patient.PatientID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(patient).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PatientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var patient = await _patientRepo.GetByID(id);
+            patient.Emergency = await _emergencyRepo.GetByUserID(patient.UserID);
+            patient.Provider = await _providerRepo.GetByID(patient.ProviderID);
+            return patient;
         }
 
         // POST: api/Patients
         [HttpPost]
-        public async Task<IActionResult> PostPatient([FromBody] Patient patient)
+        public void Post([FromBody] string value)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Patients.Add(patient);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPatient", new { id = patient.PatientID }, patient);
         }
 
-        // DELETE: api/Patients/5
+        // PUT: api/Patients/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePatient([FromRoute] int id)
+        public void Delete(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-
-            _context.Patients.Remove(patient);
-            await _context.SaveChangesAsync();
-
-            return Ok(patient);
-        }
-
-        private bool PatientExists(int id)
-        {
-            return _context.Patients.Any(e => e.PatientID == id);
         }
     }
 }

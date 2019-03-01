@@ -9,24 +9,35 @@ namespace GlobalMentalityAPI.Models
 {
     public class Patient
     {
-        [Key]
-        public int PatientID { get; set; }
-        [ForeignKey("User")]
+        public int ID { get; set; }
         public int UserID { get; set; }
-        [ForeignKey("Business")]
-        public int BusinessID { get; set; }
+        public int ProviderID { get; set; }
         public string FirstName { get; set; }
+        public string LastName { get; set; }
         [Phone]
-        public string PhoneNum { get; set; }
+        public string CellPhone { get; set; }
+        [Phone]
+        public string HomePhone { get; set; }
         [EmailAddress]
         public string EmailAddress { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
+        public string Picture { get; set; }
+        public string Address { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Address { get; set; }
-        public string InsuranceProvider { get; set; }
+        public string Insurance { get; set; }
         public int GroupInsuranceNumber { get; set; }
-        public int DoctorID { get; set; }
+        public Provider Provider { get; set; }
+        public Emergency Emergency { get; set; } 
+    }
+    
+    public class Emergency
+    {
+        public int ID { get; set; }
+        public int UserID { get; set; }
+        public string Relationship { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string HomePhone { get; set; }
+        public string CellPhone { get; set; }
     }
 }

@@ -9,12 +9,8 @@ namespace GlobalMentalityAPI.Models
 {
     public class OfficeAdmin
     {
-        [Key]
         public int AdminID { get; set; }
-        [ForeignKey("User")]
         public int UserID { get; set; }
-        [ForeignKey("Business")]
-        public int BusinessID { get; set; }
         public string FirstName { get; set; }
         [Phone]
         public string PhoneNum { get; set; }
