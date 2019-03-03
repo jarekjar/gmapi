@@ -24,14 +24,10 @@ namespace GlobalMentalityAPI.Controllers
             _providerRepo = providerRepo;
         }
 
-        // GET: api/Patients
-        [HttpGet]
-        public IEnumerable<string> GetAll()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Patients/5
+        /// <summary>
+        /// Deletes a specific TodoItem.
+        /// </summary>
+        /// <param name="id"></param>  
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetByID(int id)
         {
@@ -39,24 +35,6 @@ namespace GlobalMentalityAPI.Controllers
             patient.Emergency = await _emergencyRepo.GetByUserID(patient.UserID);
             patient.Provider = await _providerRepo.GetByID(patient.ProviderID);
             return patient;
-        }
-
-        // POST: api/Patients
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Patients/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

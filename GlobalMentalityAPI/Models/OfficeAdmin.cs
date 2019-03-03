@@ -9,7 +9,7 @@ namespace GlobalMentalityAPI.Models
 {
     public class OfficeAdmin
     {
-        public int AdminID { get; set; }
+        public int ID { get; set; }
         public int UserID { get; set; }
         public string FirstName { get; set; }
         [Phone]
