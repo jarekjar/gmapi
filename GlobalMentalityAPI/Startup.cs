@@ -31,7 +31,8 @@ namespace GlobalMentalityAPI
         {
             services.AddTransient<IPatientRepository, PatientRepository>();
             services.AddTransient<IEmergencyRepository, EmergencyRepository>();
-            services.AddTransient<IProviderRepository, ProviderRepository>();
+            services.AddTransient<IClinicianRepository, ClinicianRepository>();
+            services.AddTransient<IAppointmentRepository, AppointmentRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(c =>

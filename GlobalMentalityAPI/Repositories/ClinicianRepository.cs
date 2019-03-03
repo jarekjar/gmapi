@@ -11,11 +11,11 @@ using GlobalMentalityAPI.Models;
 
 namespace GlobalMentalityAPI.Repositories
 {
-    public class ProviderRepository : IProviderRepository
+    public class ClinicianRepository : IClinicianRepository
     {
         private readonly IConfiguration _config;
 
-        public ProviderRepository(IConfiguration config)
+        public ClinicianRepository(IConfiguration config)
         {
             _config = config;
         }
@@ -28,13 +28,23 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<Provider> GetByID(int id)
+        public async Task<Clinician> GetByID(int id)
         {
             using (var con = mainConn)
             {
-                string query = "SELECT * FROM dbo.Providers WHERE ID = @ID";
-                var result = await con.QueryFirstOrDefaultAsync<Provider>(query, new { ID = id });
+                string query = "SELECT * FROM dbo.Clinicians WHERE ID = @ID";
+                var result = await con.QueryFirstOrDefaultAsync<Clinician>(query, new { ID = id });
                 return result;
+            }
+        }
+
+        public async Task<List<Patient>> GetPatientsByID(int id)
+        {
+            using (var con = mainConn)
+            {
+                string query = "SELECT * FROM dbo.Patients WHERE ClinicianID = @ID";
+                var result = await con.QueryAsync<Patient>(query, new { ID = id });
+                return result.ToList();
             }
         }
 

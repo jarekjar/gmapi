@@ -8,6 +8,6 @@ namespace GlobalMentalityAPI.Interfaces
 {
     public interface IPatientRepository
     {
-        Task<Patient> GetByID(int id);
+        Task<Patient> GetByID(Guid id);
     }
 }

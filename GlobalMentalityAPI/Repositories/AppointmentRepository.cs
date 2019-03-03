@@ -11,11 +11,11 @@ using Dapper;
 
 namespace GlobalMentalityAPI.Repositories
 {
-    public class EmergencyRepository : IEmergencyRepository
+    public class AppointmentRepository : IAppointmentRepository
     {
         private readonly IConfiguration _config;
 
-        public EmergencyRepository(IConfiguration config)
+        public AppointmentRepository(IConfiguration config)
         {
             _config = config;
         }
@@ -28,13 +28,13 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<Emergency> GetByUserID(Guid id)
+        public async Task<List<Appointment>> GetByID(Guid id)
         {
             using (var con = mainConn)
             {
-                string query = "SELECT * FROM dbo.Emergencies WHERE PatientID = @ID";
-                var result = await con.QueryFirstOrDefaultAsync<Emergency>(query, new { ID = id });
-                return result;
+                string query = "SELECT * FROM dbo.Appointments WHERE PatientID = @ID";
+                var result = await con.QueryAsync<Appointment>(query, new { ID = id });
+                return result.ToList();
             }
         }
     }

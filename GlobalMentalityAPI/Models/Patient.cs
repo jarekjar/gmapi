@@ -9,9 +9,9 @@ namespace GlobalMentalityAPI.Models
 {
     public class Patient
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
         public int UserID { get; set; }
-        public int ProviderID { get; set; }
+        public int ClinicianID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [Phone]
@@ -26,14 +26,14 @@ namespace GlobalMentalityAPI.Models
         public DateTime DateOfBirth { get; set; }
         public string Insurance { get; set; }
         public int GroupInsuranceNumber { get; set; }
-        public Provider Provider { get; set; }
+        public Clinician Clinician { get; set; }
         public Emergency Emergency { get; set; } 
     }
     
     public class Emergency
     {
         public int ID { get; set; }
-        public int UserID { get; set; }
+        public Guid PatientID { get; set; }
         public string Relationship { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

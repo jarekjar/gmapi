@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace GlobalMentalityAPI.Interfaces
 {
-    public interface IProviderRepository
+    public interface IClinicianRepository
     {
-        Task<Provider> GetByID(int id);
+        Task<Clinician> GetByID(int id);
+        Task<List<Patient>> GetPatientsByID(int id);
     }
 }

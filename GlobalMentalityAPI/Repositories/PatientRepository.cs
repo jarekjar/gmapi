@@ -28,7 +28,7 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<Patient> GetByID(int id)
+        public async Task<Patient> GetByID(Guid id)
         {
             using (var con = mainConn)
             {

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GlobalMentalityAPI.Interfaces
 {
-    public interface IEmergencyRepository
+    public interface IAppointmentRepository
     {
-        Task<Emergency> GetByUserID(Guid id);
+        Task<List<Appointment>> GetByID(Guid id);
     }
 }
