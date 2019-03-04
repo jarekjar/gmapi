@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace GlobalMentalityAPI.Models
 {
-    public class Clinician
+    public class Clinician : InsertClinician
     {
         public int ID { get; set; }
+        
+    }
+
+    public class InsertClinician
+    {
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

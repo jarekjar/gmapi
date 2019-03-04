@@ -49,22 +49,28 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<User> Login(User user)
+        public async Task<LoggedUser> Login(LoginUser user)
         {
             using (var con = mainConn)
             {
                 string query = @"SELECT * FROM dbo.Users WHERE Username = @Username";
-                var userData = await con.QueryFirstOrDefaultAsync<User>(query, user);
+                var sqldata = await con.QueryFirstOrDefaultAsync<User>(query, user);
 
                 //if no matching user
-                if (userData == null)
+                if (sqldata == null)
                     return null;
 
                 //if password incorrect
-                if (!BCrypt.Net.BCrypt.Verify(user.Password, userData.Password))
+                if (!BCrypt.Net.BCrypt.Verify(user.Password, sqldata.Password))
                 {
                     return null;
                 }
+
+                var userData = new LoggedUser()
+                {
+                    ID = sqldata.ID,
+                    Role = sqldata.Role
+                };
 
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -81,10 +87,6 @@ namespace GlobalMentalityAPI.Repositories
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 userData.Token = tokenHandler.WriteToken(token);
-
-                // remove password before returning
-                userData.Password = null;
-                user.Password = null;
 
                 return userData;
             }

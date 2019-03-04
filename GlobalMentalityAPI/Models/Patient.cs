@@ -7,9 +7,16 @@ using System.Threading.Tasks;
 
 namespace GlobalMentalityAPI.Models
 {
-    public class Patient
+    public class Patient : InsertPatient
     {
         public Guid? ID { get; set; }
+        public Clinician Clinician { get; set; }
+        public Emergency Emergency { get; set; } 
+        public int? EmergencyID { get; set; }
+    }
+
+    public class InsertPatient
+    {
         public int UserID { get; set; }
         [Required]
         public int ClinicianID { get; set; }
@@ -29,9 +36,11 @@ namespace GlobalMentalityAPI.Models
         public DateTime DateOfBirth { get; set; }
         public string Insurance { get; set; }
         public int GroupInsuranceNumber { get; set; }
-        public Clinician Clinician { get; set; }
-        public Emergency Emergency { get; set; } 
-        public int? EmergencyID { get; set; }
+    }
+
+    public class UpdatePatient : InsertPatient
+    {
+        public Guid? ID { get; set; }
     }
     
     public class Emergency

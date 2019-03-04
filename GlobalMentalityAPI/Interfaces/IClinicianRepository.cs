@@ -9,8 +9,8 @@ namespace GlobalMentalityAPI.Interfaces
     public interface IClinicianRepository
     {
         Task<Clinician> GetByID(int id);
-        Task<List<Patient>> GetPatientsByID(int id);
-        Task<int> InsertClinician(Clinician clinician);
-        Task<Clinician> UpdateClinician(Clinician clinician);
+        Task<List<UpdatePatient>> GetPatientsByID(int id);
+        Task<int> InsertClinician(InsertClinician clinician);
+        Task UpdateClinician(Clinician clinician);
     }
 }

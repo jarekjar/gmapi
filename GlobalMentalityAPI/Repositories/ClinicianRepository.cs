@@ -38,17 +38,17 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<List<Patient>> GetPatientsByID(int id)
+        public async Task<List<UpdatePatient>> GetPatientsByID(int id)
         {
             using (var con = mainConn)
             {
                 string query = "SELECT * FROM dbo.Patients WHERE ClinicianID = @ID";
-                var result = await con.QueryAsync<Patient>(query, new { ID = id });
+                var result = await con.QueryAsync<UpdatePatient>(query, new { ID = id });
                 return result.ToList();
             }
         }
 
-        public async Task<int> InsertClinician(Clinician clinician)
+        public async Task<int> InsertClinician(InsertClinician clinician)
         {
             using (var con = mainConn)
             {
@@ -71,7 +71,7 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<Clinician> UpdateClinician(Clinician clinician)
+        public async Task UpdateClinician(Clinician clinician)
         {
             using (var con = mainConn)
             {
@@ -88,7 +88,7 @@ namespace GlobalMentalityAPI.Repositories
                                 ,[FaxNum] = @FaxNum
                                 WHERE ID = @ID;";
                 await con.QueryAsync<int>(query, clinician);
-                return clinician;
+                return;
             }
         }
 

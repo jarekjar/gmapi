@@ -9,6 +9,6 @@ namespace GlobalMentalityAPI.Interfaces
     public interface IUserRepository
     {
         Task<int> InsertUser(User user);
-        Task<User> Login(User user);
+        Task<LoggedUser> Login(LoginUser user);
     }
 }

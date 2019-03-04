@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GlobalMentalityAPI.Attributes;
 using GlobalMentalityAPI.Interfaces;
 using GlobalMentalityAPI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,7 @@ namespace GlobalMentalityAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [ValidateModel]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -22,14 +24,20 @@ namespace GlobalMentalityAPI.Controllers
             _userRepository = userRepository;
         }
 
-        
+
+        /// <summary>
+        /// Inserts a new user, brings back ID.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>User ID</returns> 
         [HttpPost]
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<ActionResult<int>> InsertUser(User user)
+        public async Task<ActionResult<int>> InsertUser(InsertUser user)
         {
             try
             {
-                return await _userRepository.InsertUser(user);
+                //cast InsertUser into User object.
+                return await _userRepository.InsertUser((User)user);
             }
             catch (Exception)
             {
@@ -37,9 +45,14 @@ namespace GlobalMentalityAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Logs in user, brings back user data.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>User Object</returns> 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(User user)
+        public async Task<ActionResult<LoggedUser>> Login(LoginUser user)
         {
             try
             {

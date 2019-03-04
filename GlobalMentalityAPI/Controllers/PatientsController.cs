@@ -76,37 +76,15 @@ namespace GlobalMentalityAPI.Controllers
         /// <summary>
         /// Inserts a new patient, generates a new ID.
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /Todo
-        ///     {
-        ///      "id": null,
-        ///      "userID": 0,
-        ///      "clinicianID": 1,
-        ///      "firstName": "Jared",
-        ///      "lastName": "Smith",
-        ///      "cellPhone": "951-217-4555",
-        ///      "homePhone": null,
-        ///      "emailAddress": "jaredkjar@gmail.com",
-        ///      "picture": "string",
-        ///      "address": "9393 String St, Los Angeles CA 92345",
-        ///      "gender": "Male",
-        ///      "dateOfBirth": "2019-03-03T21:35:45.785Z",
-        ///      "insurance": "Aetna",
-        ///      "groupInsuranceNumber": 123452
-        ///      }
-        ///
-        /// </remarks>
         /// <param name="patient"></param>
         /// <returns>Patiend ID</returns> 
         [HttpPost]
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<ActionResult<Guid>> InsertPatient (Patient patient)
+        public async Task<ActionResult<Guid>> InsertPatient (InsertPatient patient)
         {
             try
             {
-                return await _patientRepo.InsertPatient(patient);
+                return await _patientRepo.InsertPatient((Patient)patient);
             }
             catch (Exception)
             {
@@ -117,37 +95,16 @@ namespace GlobalMentalityAPI.Controllers
         /// <summary>
         /// Updates a patient.
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /Todo
-        ///     {
-        ///      "id": null,
-        ///      "userID": 0,
-        ///      "clinicianID": 1,
-        ///      "firstName": "Jared",
-        ///      "lastName": "Smith",
-        ///      "cellPhone": "951-217-4555",
-        ///      "homePhone": null,
-        ///      "emailAddress": "jaredkjar@gmail.com",
-        ///      "picture": "string",
-        ///      "address": "9393 String St, Los Angeles CA 92345",
-        ///      "gender": "Male",
-        ///      "dateOfBirth": "2019-03-03T21:35:45.785Z",
-        ///      "insurance": "Aetna",
-        ///      "groupInsuranceNumber": 123452
-        ///      }
-        ///
-        /// </remarks>
         /// <param name="patient"></param>
-        /// <returns>Patiend ID</returns> 
+        /// <returns>Ok!</returns> 
         [HttpPut]
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<ActionResult<Patient>> UpdatePatient(Patient patient)
+        public async Task<ActionResult> UpdatePatient(UpdatePatient patient)
         {
             try
             {
-                return await _patientRepo.UpdatePatient(patient);
+                await _patientRepo.UpdatePatient(patient);
+                return Ok();
             }
             catch (Exception)
             {

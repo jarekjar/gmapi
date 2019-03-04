@@ -67,7 +67,7 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<Patient> UpdatePatient(Patient patient)
+        public async Task UpdatePatient(UpdatePatient patient)
         {
             using (var con = mainConn)
             {
@@ -88,7 +88,7 @@ namespace GlobalMentalityAPI.Repositories
                                    ,Insurance = @Insurance
                                    WHERE ID = @ID";
                 await con.QueryAsync(query, patient);
-                return patient;
+                return;
             }
         }
     }

@@ -14,6 +14,7 @@ namespace GlobalMentalityAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [ValidateModel]
     public class CliniciansController : ControllerBase
     {
         private readonly IPatientRepository _patientRepo;
@@ -51,12 +52,12 @@ namespace GlobalMentalityAPI.Controllers
         }
 
         /// <summary>
-        /// Gets list of clinicians for the doctor by id.
+        /// Gets list of patients for the doctor by id.
         /// </summary>
         /// <param name="id"></param> 
         [HttpGet("{id}/patients")]
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<ActionResult<List<Patient>>> GetPatientsByID(int id)
+        public async Task<ActionResult<List<UpdatePatient>>> GetPatientsByID(int id)
         {
             try
             {
@@ -92,7 +93,7 @@ namespace GlobalMentalityAPI.Controllers
         /// <param name="clinician"></param> 
         [HttpPost]
         [Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<ActionResult<int>> InsertClinician(Clinician clinician)
+        public async Task<ActionResult<int>> InsertClinician(InsertClinician clinician)
         {
             try
             {
@@ -110,11 +111,12 @@ namespace GlobalMentalityAPI.Controllers
         /// <param name="clinician"></param> 
         [HttpPut]
         [Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<ActionResult<Clinician>> UpdateClinician(Clinician clinician)
+        public async Task<ActionResult> UpdateClinician(Clinician clinician)
         {
             try
             {
-                return await _clinicianRepo.UpdateClinician(clinician);
+                await _clinicianRepo.UpdateClinician(clinician);
+                return Ok();
             }
             catch (Exception)
             {
