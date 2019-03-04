@@ -9,6 +9,7 @@ namespace GlobalMentalityAPI.Models
     {
         public int ID { get; set; }
         public Guid PatientID { get; set; }
+        public int ClinicianID { get; set; }
         public DateTime Time { get; set; }
         public string ClinicianName { get; set; }
         public string ClinicianPicture { get; set; }

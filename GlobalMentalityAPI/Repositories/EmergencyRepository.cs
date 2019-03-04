@@ -28,7 +28,7 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<Emergency> GetByUserID(Guid id)
+        public async Task<Emergency> GetByUserID(Guid? id)
         {
             using (var con = mainConn)
             {

@@ -48,5 +48,49 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
+        public async Task<int> InsertClinician(Clinician clinician)
+        {
+            using (var con = mainConn)
+            {
+                string query = @"INSERT INTO [dbo].[Clinicians]
+                                ([UserID]
+                                ,[FirstName]
+                                ,[LastName]
+                                ,[PhoneNum]
+                                ,[EmailAddress]
+                                ,[Title]
+                                ,[Address]
+                                ,[Practice]
+                                ,[FaxNum])
+                            VALUES
+                                (@UserID, @FirstName, @LastName, @PhoneNum, @EmailAddress,
+                                @Title, @Address, @Practice, @FaxNum);
+                            SELECT SCOPE_IDENTITY()";
+                var id = await con.QueryFirstOrDefaultAsync<int>(query, clinician);
+                return id;
+            }
+        }
+
+        public async Task<Clinician> UpdateClinician(Clinician clinician)
+        {
+            using (var con = mainConn)
+            {
+                string query = @"UPDATE [dbo].[Clinicians]
+                                    SET
+                                [UserID] = @UserID
+                                ,[FirstName] = @FirstName
+                                ,[LastName] = @LastName
+                                ,[PhoneNum] = @PhoneNum
+                                ,[EmailAddress] = @EmailAddress
+                                ,[Title] = @Title
+                                ,[Address] = @Address
+                                ,[Practice] = @Practice
+                                ,[FaxNum] = @FaxNum
+                                WHERE ID = @ID;";
+                await con.QueryAsync<int>(query, clinician);
+                return clinician;
+            }
+        }
+
     }
 }

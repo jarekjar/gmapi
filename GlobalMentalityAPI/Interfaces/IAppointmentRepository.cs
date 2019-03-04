@@ -8,6 +8,7 @@ namespace GlobalMentalityAPI.Interfaces
 {
     public interface IAppointmentRepository
     {
-        Task<List<Appointment>> GetByID(Guid id);
+        Task<List<Appointment>> GetByPatientID(Guid id);
+        Task<List<Appointment>> GetByClinicianID(int id);
     }
 }

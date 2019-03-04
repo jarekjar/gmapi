@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace GlobalMentalityAPI.Interfaces
 {
-    public interface IEmergencyRepository
+    public interface IUserRepository
     {
-        Task<Emergency> GetByUserID(Guid? id);
+        Task<int> InsertUser(User user);
+        Task<User> Login(User user);
     }
 }

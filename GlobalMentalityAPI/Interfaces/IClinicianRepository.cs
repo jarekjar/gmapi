@@ -10,5 +10,7 @@ namespace GlobalMentalityAPI.Interfaces
     {
         Task<Clinician> GetByID(int id);
         Task<List<Patient>> GetPatientsByID(int id);
+        Task<int> InsertClinician(Clinician clinician);
+        Task<Clinician> UpdateClinician(Clinician clinician);
     }
 }

@@ -28,11 +28,21 @@ namespace GlobalMentalityAPI.Repositories
             }
         }
 
-        public async Task<List<Appointment>> GetByID(Guid id)
+        public async Task<List<Appointment>> GetByPatientID(Guid id)
         {
             using (var con = mainConn)
             {
                 string query = "SELECT * FROM dbo.Appointments WHERE PatientID = @ID";
+                var result = await con.QueryAsync<Appointment>(query, new { ID = id });
+                return result.ToList();
+            }
+        }
+
+        public async Task<List<Appointment>> GetByClinicianID(int id)
+        {
+            using (var con = mainConn)
+            {
+                string query = "SELECT * FROM dbo.Appointments WHERE ClinicianID = @ID";
                 var result = await con.QueryAsync<Appointment>(query, new { ID = id });
                 return result.ToList();
             }
