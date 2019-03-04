@@ -27,19 +27,33 @@ namespace GlobalMentalityAPI.Controllers
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<int>> InsertUser(User user)
         {
-            return await _userRepository.InsertUser(user);
+            try
+            {
+                return await _userRepository.InsertUser(user);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login(User user)
         {
-            var loggedUser = await _userRepository.Login(user);
+            try
+            {
+                var loggedUser = await _userRepository.Login(user);
 
-            if (loggedUser == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                if (loggedUser == null)
+                    return BadRequest(new { message = "Username or password is incorrect" });
 
-            return loggedUser;
+                return loggedUser;
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
     }
 }

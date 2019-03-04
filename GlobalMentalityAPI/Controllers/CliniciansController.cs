@@ -38,9 +38,16 @@ namespace GlobalMentalityAPI.Controllers
         /// </summary>
         /// <param name="id"></param> 
         [HttpGet("{id}")]
-        public async Task<Clinician> GetByID(int id)
+        public async Task<ActionResult<Clinician>> GetByID(int id)
         {
-            return await _clinicianRepo.GetByID(id);
+            try
+            {
+                return await _clinicianRepo.GetByID(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>
@@ -49,9 +56,16 @@ namespace GlobalMentalityAPI.Controllers
         /// <param name="id"></param> 
         [HttpGet("{id}/patients")]
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<List<Patient>> GetPatientsByID(int id)
+        public async Task<ActionResult<List<Patient>>> GetPatientsByID(int id)
         {
-            return await _clinicianRepo.GetPatientsByID(id);
+            try
+            {
+                return await _clinicianRepo.GetPatientsByID(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>
@@ -62,7 +76,14 @@ namespace GlobalMentalityAPI.Controllers
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<List<Appointment>>> GetAppointmentsByID(int id)
         {
-            return await _appointmentRepo.GetByClinicianID(id);
+            try
+            {
+                return await _appointmentRepo.GetByClinicianID(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>
@@ -73,7 +94,14 @@ namespace GlobalMentalityAPI.Controllers
         [Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<int>> InsertClinician(Clinician clinician)
         {
-            return await _clinicianRepo.InsertClinician(clinician);
+            try
+            {
+                return await _clinicianRepo.InsertClinician(clinician);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>
@@ -82,9 +110,16 @@ namespace GlobalMentalityAPI.Controllers
         /// <param name="clinician"></param> 
         [HttpPut]
         [Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
-        public async Task<Clinician> UpdateClinician(Clinician clinician)
+        public async Task<ActionResult<Clinician>> UpdateClinician(Clinician clinician)
         {
-            return await _clinicianRepo.UpdateClinician(clinician);
+            try
+            {
+                return await _clinicianRepo.UpdateClinician(clinician);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
     }
 }

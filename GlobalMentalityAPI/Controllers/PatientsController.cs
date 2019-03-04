@@ -42,10 +42,18 @@ namespace GlobalMentalityAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetByID(Guid id)
         {
-            var patient = await _patientRepo.GetByID(id);
-            patient.Emergency = await _emergencyRepo.GetByUserID(patient.ID);
-            patient.Clinician = await _clinicianRepo.GetByID(patient.ClinicianID);
-            return patient;
+            try
+            {
+                var patient = await _patientRepo.GetByID(id);
+                patient.Emergency = await _emergencyRepo.GetByUserID(patient.ID);
+                patient.Clinician = await _clinicianRepo.GetByID(patient.ClinicianID);
+                return patient;
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
         }
 
         /// <summary>
@@ -55,7 +63,14 @@ namespace GlobalMentalityAPI.Controllers
         [HttpGet("{id}/appointments")]
         public async Task<ActionResult<List<Appointment>>> GetAppointmentsByID(Guid id)
         {
-            return await _appointmentRepo.GetByPatientID(id);
+            try
+            {
+                return await _appointmentRepo.GetByPatientID(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>
@@ -89,7 +104,14 @@ namespace GlobalMentalityAPI.Controllers
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<Guid>> InsertPatient (Patient patient)
         {
-            return await _patientRepo.InsertPatient(patient);
+            try
+            {
+                return await _patientRepo.InsertPatient(patient);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         /// <summary>
@@ -123,7 +145,14 @@ namespace GlobalMentalityAPI.Controllers
         [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<Patient>> UpdatePatient(Patient patient)
         {
-            return await _patientRepo.UpdatePatient(patient);
+            try
+            {
+                return await _patientRepo.UpdatePatient(patient);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
     }
 }
