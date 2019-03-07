@@ -122,7 +122,7 @@ namespace GlobalMentalityAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Global Mentality API");
             });
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
             app.UseAuthentication();
 
             DefaultFilesOptions options = new DefaultFilesOptions();
