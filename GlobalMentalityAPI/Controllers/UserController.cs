@@ -14,7 +14,7 @@ namespace GlobalMentalityAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [ValidateModel]
+    //[ValidateModel]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -31,7 +31,7 @@ namespace GlobalMentalityAPI.Controllers
         /// <param name="user"></param>
         /// <returns>User ID</returns> 
         [HttpPost]
-        [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
+       // [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<int>> InsertUser(InsertUser user)
         {
             try

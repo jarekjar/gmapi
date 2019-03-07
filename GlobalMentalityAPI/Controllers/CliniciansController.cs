@@ -13,7 +13,7 @@ namespace GlobalMentalityAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [ValidateModel]
     public class CliniciansController : ControllerBase
     {
@@ -56,7 +56,7 @@ namespace GlobalMentalityAPI.Controllers
         /// </summary>
         /// <param name="id"></param> 
         [HttpGet("{id}/patients")]
-        [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
+        //[Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<List<UpdatePatient>>> GetPatientsByID(int id)
         {
             try
@@ -74,7 +74,7 @@ namespace GlobalMentalityAPI.Controllers
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}/appointments")]
-        [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
+        //[Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<List<Appointment>>> GetAppointmentsByID(int id)
         {
             try
@@ -92,7 +92,7 @@ namespace GlobalMentalityAPI.Controllers
         /// </summary>
         /// <param name="clinician"></param> 
         [HttpPost]
-        [Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
+        //[Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<int>> InsertClinician(InsertClinician clinician)
         {
             try
@@ -110,7 +110,7 @@ namespace GlobalMentalityAPI.Controllers
         /// </summary>
         /// <param name="clinician"></param> 
         [HttpPut]
-        [Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
+        //[Authorize(Roles = Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult> UpdateClinician(Clinician clinician)
         {
             try

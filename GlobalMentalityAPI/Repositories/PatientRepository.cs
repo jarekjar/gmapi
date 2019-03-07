@@ -73,20 +73,20 @@ namespace GlobalMentalityAPI.Repositories
             {
                 string query = @"UPDATE [dbo].[Patients]
                                     SET
-                                   UserID = @UserID
-                                   ,ClinicianID = @ClinicianID
-                                   ,FirstName = @FirstName
-                                   ,LastName = @LastName
-                                   ,EmailAddress = @EmailAddress
-                                   ,Gender = @Gender
-                                   ,DateOfBirth = @DateOfBirth
-                                   ,Address = @Address
-                                   ,GroupInsuranceNumber = @GroupInsuranceNumber
-                                   ,CellPhone = @CellPhone
-                                   ,HomePhone = @HomePhone
-                                   ,Picture = @Picture
-                                   ,Insurance = @Insurance
+                                   UserID = IsNull(@UserID, UserID)
+                                   ,FirstName = IsNull(@FirstName, FirstName)
+                                   ,LastName = IsNull(@LastName, LastName)
+                                   ,EmailAddress = IsNull(@EmailAddress, EmailAddress)
+                                   ,Gender = IsNull(@Gender, Gender)
+                                   ,DateOfBirth = IsNull(@DateOfBirth, DateOfBirth)
+                                   ,Address = IsNull(@Address, Address)
+                                   ,GroupInsuranceNumber = IsNull(@GroupInsuranceNumber, GroupInsuranceNumber)
+                                   ,CellPhone = IsNull(@CellPhone, CellPhone)
+                                   ,HomePhone = IsNull(@HomePhone, HomePhone)
+                                   ,Picture = IsNull(@Picture, Picture)
+                                   ,Insurance = IsNull(@Insurance, Insurance)
                                    WHERE ID = @ID";
+                patient.DateOfBirth = Convert.ToDateTime(patient.DateOfBirth);
                 await con.QueryAsync(query, patient);
                 return;
             }

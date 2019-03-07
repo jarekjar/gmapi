@@ -15,7 +15,7 @@ namespace GlobalMentalityAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ValidateModel]
-    [Authorize]
+    //[Authorize]
     public class PatientsController : ControllerBase
     {
         private readonly IPatientRepository _patientRepo;
@@ -79,7 +79,7 @@ namespace GlobalMentalityAPI.Controllers
         /// <param name="patient"></param>
         /// <returns>Patiend ID</returns> 
         [HttpPost]
-        [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
+        //[Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult<Guid>> InsertPatient (InsertPatient patient)
         {
             try
@@ -97,8 +97,8 @@ namespace GlobalMentalityAPI.Controllers
         /// </summary>
         /// <param name="patient"></param>
         /// <returns>Ok!</returns> 
-        [HttpPut]
-        [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
+        [HttpPut("{id}")]
+       // [Authorize(Roles = Role.Clinician + "," + Role.OfficeAdmin + "," + Role.SuperAdmin)]
         public async Task<ActionResult> UpdatePatient(UpdatePatient patient)
         {
             try
